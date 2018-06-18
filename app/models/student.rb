@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
     attr_accessor :password
+    has_secure_password
     EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
     validates :name, :presence => true, :length => { :in => 3..30 }
     validates :imageUrl, :presence => true
@@ -8,7 +9,7 @@ class Student < ApplicationRecord
     validates :area, :presence => true    
     validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
     validates :password, :presence => true
-    validates :phone, :numericality => true, :length => { :minimum => 10, :maximum => 15 }
+    validates :phone, :numericality => true, :length => { :minimum => 9, :maximum => 15 }
 
     validates_length_of :password, :in => 6..20, :on => :create
 
