@@ -22,7 +22,7 @@ class ApplicationController < ActionController::API
             token = tokenGenerator[:token]
             @authentication = Authentication.create([
                 {
-                    token: _token, 
+                    token: token, 
                     ts: tokenGenerator[:ts],
                     date: tokenGenerator[:date]
                 }

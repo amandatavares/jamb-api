@@ -1,5 +1,5 @@
 class AuthenticationsController < ApplicationController
-    #before_action :authenticate!
+    before_action :authenticate!
 
     def signin
     end
@@ -10,10 +10,6 @@ class AuthenticationsController < ApplicationController
             render json: {message:"User logged out", status:200}
         end
     end
-
-
-    
-    
 
     #<input type=email name="authenticate[email]">
     #<input type=password name="authentica[password]">
