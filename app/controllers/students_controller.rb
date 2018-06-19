@@ -17,6 +17,7 @@ class StudentsController < ApplicationController
 # Criar um novo artigo
 # POST /students
     def create
+        student_params[:password] = "#{Digest::SHA256.hexdigest student_params[:password]}"
         student = Student.new(student_params)
         if student.save
             render json: {status: 'SUCCESS', message:'Saved student', data:student},status: :ok
@@ -40,6 +41,11 @@ class StudentsController < ApplicationController
             render json: {status: 'ERROR', message:'Students not update', data:student.erros},status: :unprocessable_entity
         end
     end
+
+    # def mudarsenha
+    #     student_params[:password] = Digest::SHA256.hexdigest student_params[:password]
+    # end
+    
     private
     def student_params
         params.require(:student).permit(:imageUrl,:name,:university,:major,:area,:startDate,:job,:phone,:email,:password)

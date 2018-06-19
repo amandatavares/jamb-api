@@ -6,10 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
+require 'digest'
 include Faker
 
-Student.destroy_all
-
+#Student.destroy_all
+_senha = "teste123"
 3.times do
     Student.create([{
        imageUrl: 'https://www.koty.pl/wp-content/uploads/2018/03/28433855_1616057341844746_1624119600692068352_n-200x133.jpg',
@@ -21,7 +22,7 @@ Student.destroy_all
        job: Faker::Company.name,
        phone: Faker::PhoneNumber.phone_number,
        email: Faker::Internet.email,
-       password: 'teste'
+       password: "#{Digest::SHA256.hexdigest _senha}" 
     }])
 end
 
