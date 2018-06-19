@@ -84,6 +84,7 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
+
   database: <%= ENV["DATABASE"] %>
-  username: jamb-api#<%= ENV["USERNAME"] %>
-  password: rwJEtIhwupRM_uxn-M0YTVDOIj#<%= ENV['PASSWORD'] %>
+  username: <%= ENV["USERNAME"] %>
+  password: <%= ENV['PASSWORD'] %>

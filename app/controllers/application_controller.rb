@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
 
         key = {
             token: "#{Digest::SHA256.hexdigest generate_key}",
-            ts: _ts
+            ts: _ts,
             date: _date
         }
 
@@ -23,9 +23,10 @@ class ApplicationController < ActionController::API
         if tokenGenerator[:token].to_s == _token.to_s
             #Do something
             @authentication = Authentication.create([
-                {token: _token, 
-                ts: tokenGenerator[:ts],
-                date: tokenGenerator[:date]
+                {
+                    token: _token, 
+                    ts: tokenGenerator[:ts],
+                    date: tokenGenerator[:date]
                 }
             ])
 
