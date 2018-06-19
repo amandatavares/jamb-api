@@ -2,11 +2,10 @@ class ApplicationController < ActionController::API
     def tokenGenerator
         
         _privateKey = "juizZeRuela"
+        _ts = Time.now.to_i
+        _date = Date.today
 
-        _ts = params[:ts]
-        _date = params[:date]
-
-        generate_key = "#{Date.today}#{_privateKey}#{_ts}"
+        generate_key = "#{_date}#{_privateKey}#{_ts}"
 
         key = {
             token: "#{Digest::SHA256.hexdigest generate_key}",
@@ -18,10 +17,9 @@ class ApplicationController < ActionController::API
     end
 
     def authenticate!
-        _token = params[:token].to_s.downcase!
-
-        if tokenGenerator[:token].to_s == _token.to_s
-            #Do something
+        _current_student = Student.find_by_email_and_password(params[:email],params[:password])
+        if _current_student != nil
+            token = tokenGenerator[:token]
             @authentication = Authentication.create([
                 {
                     token: _token, 
@@ -29,10 +27,9 @@ class ApplicationController < ActionController::API
                     date: tokenGenerator[:date]
                 }
             ])
-
-            render json: @authentication
+            render json: {token: token, status: 200}
         else
-            puts "User isn`t authenticated"
+            render json: {message: "Access Denied", status: 403}
         end
     end
 
