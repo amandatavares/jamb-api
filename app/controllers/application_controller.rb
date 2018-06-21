@@ -1,7 +1,17 @@
 class ApplicationController < ActionController::API
+    before_action :is_auth
+
+    def is_auth
+        if  Authentication.where(:id=>tokenGenerator[:token]).size == 0
+            render json:{error: "Access Denied", status: 403}
+            #raise
+            #redirect_to root
+        end
+    end
+    
     def tokenGenerator
         
-        _privateKey = "juizZeRuela"
+        _privateKey = "4266"
         _ts = Time.now.to_i
         _date = Date.today
 
@@ -30,13 +40,6 @@ class ApplicationController < ActionController::API
             render json: {token: token, status: 200}
         else
             render json: {message: "Access Denied", status: 403}
-        end
-    end
-
-    def is_auth
-        if  Authentication.where(:id=>tokenGenerator[:token]).size == 0
-            render json:{error: "Access Denied", status: 403}
-            raise
         end
     end
 end
