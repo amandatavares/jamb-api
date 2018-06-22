@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::API
-    before_action :is_auth
+    # before_action :is_auth
 
-    def is_auth
-        if  Authentication.where(:id=>tokenGenerator[:token]).size == 0
-            render json:{error: "Access Denied", status: 403}
-            #raise
-            #redirect_to root
-        end
-    end
+    # def is_auth
+    #     if  Authentication.where(:id=>tokenGenerator[:token]).size == 0
+    #         render json:{error: "Access Denied", status: 403}
+    #         #raise
+    #         #redirect_to root
+    #     end
+    # end
     
     def tokenGenerator
         
@@ -26,20 +26,20 @@ class ApplicationController < ActionController::API
         return key
     end
 
-    def authenticate!
-        _current_student = Student.find_by_email_and_password(params[:email],params[:password])
-        if _current_student != nil
-            token = tokenGenerator[:token]
-            @authentication = Authentication.create([
-                {
-                    token: token, 
-                    ts: tokenGenerator[:ts],
-                    date: tokenGenerator[:date]
-                }
-            ])
-            render json: {token: token, status: 200}
-        else
-            render json: {message: "Access Denied", status: 403}
-        end
-    end
+    # def authenticate!
+    #     _current_student = Student.find_by_email_and_password(params[:email],params[:password])
+    #     if _current_student != nil
+    #         token = tokenGenerator[:token]
+    #         @authentication = Authentication.create([
+    #             {
+    #                 token: token, 
+    #                 ts: tokenGenerator[:ts],
+    #                 date: tokenGenerator[:date]
+    #             }
+    #         ])
+    #         render json: {token: token, status: 200}
+    #     else
+    #         render json: {message: "Access Denied", status: 403}
+    #     end
+    # end
 end
